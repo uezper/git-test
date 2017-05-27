@@ -87,14 +87,23 @@
             <!-- Due to Maven's lack of intelligence with EARs we need to configure 
                 the jboss-as maven plugin to skip deployment for all modules. We then enable 
                 it specifically in the ear module. -->
-            <plugin>
+		<plugin>
+			<groupId>org.wildfly.plugins</groupId>
+			<artifactId>wildfly-maven-plugin</artifactId>
+			<version>1.0.2.Final</version>
+                <configuration>
+                    <filename>${project.artifactId}.ear</filename>
+                    <skip>false</skip>
+                </configuration>
+		</plugin>
+        <!--    <plugin>
                 <groupId>org.jboss.as.plugins</groupId>
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <configuration>
                     <filename>${project.artifactId}.ear</filename>
                     <skip>false</skip>
                 </configuration>
-            </plugin>
+            </plugin>-->
        </plugins>
     </build>
    
