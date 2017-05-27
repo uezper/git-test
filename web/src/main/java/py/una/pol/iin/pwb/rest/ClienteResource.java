@@ -67,6 +67,11 @@ public class ClienteResource {
 	{
 		clienteBean.removeCliente(id);
 	}
-	
 
+	@Path("/testing")
+	public Cliente testing() {
+		Cliente c = new Cliente();
+		c.setNombre("Esto es una prueba");
+		return c;
+	}
 }
