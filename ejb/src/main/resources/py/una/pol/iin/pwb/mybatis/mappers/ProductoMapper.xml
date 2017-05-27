@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.ProductoMapper">
+	  
+	  <!--  INSERT  -->
+	  <insert id="insertProducto" useGeneratedKeys="true" keyProperty="id" parameterType="Producto">
+	  	insert into Producto(descripcion, cantidad) values (#{descripcion}, #{cantidad});
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateProducto" parameterType="Producto">
+	  	update Producto set
+	  	 
+	  	descripcion = #{descripcion},               	
+       	cantidad = #{cantidad}      	 
+       	    	
+        where id = #{id};
+	  </update>
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteProductoById" parameterType="Long">
+	    delete from Producto WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllProductos" resultType="Producto">
+	  	select * from Producto;
+	  </select>
+	  
+	  <select id="findProductoById" parameterType="Long" resultType="Producto">
+	  	select * from Producto WHERE ID = #{id};
+	  </select>
+	  
+	
+  </mapper>

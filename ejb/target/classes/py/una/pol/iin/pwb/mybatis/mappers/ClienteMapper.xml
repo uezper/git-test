@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.ClienteMapper">
+	  
+   	<!--    RESULT MAPS    -->
+	 <resultMap id="ClienteMap" type="Cliente" >
+	    <id column="id" property="id"  />
+	    <result column="nombre" property="nombre" />
+	    <result column="telefono" property="telefono" />
+	    <result column="deuda" property="deuda" />	    
+	</resultMap>  
+	  
+	  <!--  INSERT  -->
+	  <insert id="insertCliente" useGeneratedKeys="true" keyProperty="id" parameterType="Cliente">
+	  	insert into Cliente(nombre, telefono, deuda) values (#{nombre}, #{telefono}, #{deuda});
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateCliente" parameterType="Cliente">
+	  	update Cliente set
+	  	 
+	  	nombre = #{nombre},               	
+       	telefono = #{telefono},      	 
+       	deuda = #{deuda}
+       	    	
+        where id = #{id};
+	  </update>
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteClienteById" parameterType="Long">
+	    delete from Cliente WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllClientes" resultType="Cliente">
+	  	select * from Cliente;
+	  </select>
+	  
+	  <select id="findClienteById" parameterType="Long" resultType="Cliente">
+	  	select * from Cliente WHERE ID = #{id};
+	  </select>
+	  
+	
+  </mapper>

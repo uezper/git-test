@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+  	<typeAlias alias="Cliente" type="py.una.pol.iin.pwb.model.Cliente"/>
+  	<typeAlias alias="Proveedor" type="py.una.pol.iin.pwb.model.Proveedor"/>
+  	<typeAlias alias="Producto" type="py.una.pol.iin.pwb.model.Producto"/>
+  	<typeAlias alias="Compra" type="py.una.pol.iin.pwb.model.Compra"/>
+  	<typeAlias alias="Venta" type="py.una.pol.iin.pwb.model.Venta"/>
+  	<typeAlias alias="DetalleCompra" type="py.una.pol.iin.pwb.model.DetalleCompra"/>
+  	<typeAlias alias="DetalleVenta" type="py.una.pol.iin.pwb.model.DetalleVenta"/>
+  </typeAliases>
+  <environments default="production">
+    <environment id="production">
+      <transactionManager type="MANAGED"/>      
+      <dataSource type="JNDI">
+    	<property name="data_source" value="java:jboss/datasources/pwbDS"/>
+	  </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/ClienteMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/ProveedorMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/ProductoMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/CompraMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/VentaMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/DetalleCompraMapper.xml"/>
+    <mapper resource="py/una/pol/iin/pwb/mybatis/mappers/DetalleVentaMapper.xml"/>
+  </mappers>
+</configuration>

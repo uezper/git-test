@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.ProveedorMapper">
+	  
+   	<!--    RESULT MAPS    -->
+	 <resultMap id="ProveedorMap" type="Proveedor" >
+	    <id column="id" property="id"  />
+	    <result column="nombre" property="nombre" />
+	    <result column="telefono" property="telefono" />
+	</resultMap>  
+	  
+	  <!--  INSERT  -->
+	  <insert id="insertProveedor" useGeneratedKeys="true" keyProperty="id" parameterType="Proveedor">
+	  	insert into Proveedor(nombre, telefono) values (#{nombre}, #{telefono});
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateProveedor" parameterType="Proveedor">
+	  	update Proveedor set
+	  	 
+	  	nombre = #{nombre},               	
+       	telefono = #{telefono}
+       	    	
+        where id = #{id};
+	  </update>
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteProveedorById" parameterType="Long">
+	    delete from Proveedor WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllProveedores" resultType="Proveedor">
+	  	select * from Proveedor;
+	  </select>
+	  
+	  <select id="findProveedorById" parameterType="Long" resultType="Proveedor">
+	  	select * from Proveedor WHERE ID = #{id};
+	  </select>
+	  
+	
+  </mapper>

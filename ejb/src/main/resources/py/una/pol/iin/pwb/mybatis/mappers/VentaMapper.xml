@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.VentaMapper">
+	  
+		 <!--    RESULT MAPS    -->
+		 <resultMap id="VentaMap" type="Venta" >
+		     <id column="id" property="id"  />		     
+		     <result column="montototal" property="montoTotal" />		     		     		     		     		     		      
+		     <association column="cliente_id" property="cliente" javaType="Cliente" 
+		     	resultMap="py.una.pol.iin.pwb.mybatis.ClienteMapper.ClienteMap" />
+		     <collection column="id" property="detalleVentas" javaType="java.util.Set" 
+		     	ofType="DetalleVenta" 
+		     	select="py.una.pol.iin.pwb.mybatis.DetalleVentaMapper.findDetalleVentaFromVenta"/>       		     			     			         		     
+		 </resultMap>
+		 
+
+      
+	  <!--  INSERT  -->
+	  <insert id="insertVenta" useGeneratedKeys="true" keyProperty="id" parameterType="Venta">
+	  		insert into Venta(cliente_id, montototal) values (#{cliente.id}, #{montoTotal});	  	
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateVenta" parameterType="Venta">
+		  	update Venta set
+		  	 
+		  	cliente_id = #{cliente.id},               	
+	       	montototal = #{montoTotal}      	 
+	       	    	
+	        where id = #{id};
+	  </update>
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteVentaById" parameterType="Long">
+	      delete from Venta WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllVentas" resultType="Venta" parameterType="Long">
+	  	  select id, cliente_id as clienteId, montototal from Venta
+	  	  <if test="offset != null">
+	  	  	WHERE id >= #{offset} 
+	  	  </if>	  	  
+	  	  order by id
+	  	  <if test="limit != null">
+	  	  limit #{limit}
+	  	  </if>
+	  	  ;
+	  </select>
+	  
+	  <select id="findVentaById" parameterType="Long" resultMap="VentaMap">
+	  	  select venta.id, venta.montototal, venta.cliente_id, cliente.id, cliente.nombre, cliente.telefono, cliente.deuda	  	  
+	  	  from Venta 
+	  	  inner join Cliente ON venta.cliente_id = cliente.id
+	  	  WHERE venta.id = #{id};
+	  </select>
+	  
+	
+  </mapper>

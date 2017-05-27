@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.CompraMapper">
+	  
+		 <!--    RESULT MAPS    -->
+		 <resultMap id="CompraMap" type="Compra" >
+		     <id column="id" property="id"  />		     
+		     <result column="montototal" property="montoTotal" />		     		     		     		     		     		      
+		     <association column="proveedor_id" property="proveedor" javaType="Proveedor" 
+		     	resultMap="py.una.pol.iin.pwb.mybatis.ProveedorMapper.ProveedorMap" />
+		     <collection column="id" property="detalleCompras" javaType="java.util.Set" 
+		     	ofType="DetalleCompra" 
+		     	select="py.una.pol.iin.pwb.mybatis.DetalleCompraMapper.findDetalleCompraFromCompra"/>       		     			     			         		     
+		 </resultMap>
+		 
+
+      
+	  <!--  INSERT  -->
+	  <insert id="insertCompra" useGeneratedKeys="true" keyProperty="id" parameterType="Compra">
+	  		insert into Compra(proveedor_id, montototal) values (#{proveedor.id}, #{montoTotal});	  	
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateCompra" parameterType="Compra">
+		  	update Compra set
+		  	 
+		  	proveedor_id = #{proveedor.id},               	
+	       	montototal = #{montoTotal}      	 
+	       	    	
+	        where id = #{id};
+	  </update>
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteCompraById" parameterType="Long">
+	      delete from Compra WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllCompras" resultType="Compra" parameterType="Long">
+	  	  select id, proveedor_id as proveedorId, montototal from Compra
+	  	  <if test="offset != null">
+	  	  	WHERE id >= #{offset} 
+	  	  </if>	  	  
+	  	  order by id
+	  	  <if test="limit != null">
+	  	  limit #{limit}
+	  	  </if>
+	  	  ;
+	  </select>
+	  
+	  <select id="findCompraById" parameterType="Long" resultMap="CompraMap">
+	  	  select compra.id, compra.montototal, compra.proveedor_id, proveedor.id, proveedor.nombre, proveedor.telefono
+	  	  from Compra 
+	  	  inner join Proveedor ON compra.proveedor_id = proveedor.id
+	  	  WHERE compra.id = #{id};
+	  </select>
+	  
+	
+  </mapper>

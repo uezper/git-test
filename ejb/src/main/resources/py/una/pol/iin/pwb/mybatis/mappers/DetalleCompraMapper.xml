@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="py.una.pol.iin.pwb.mybatis.DetalleCompraMapper">
+
+	  <!--  RESULT MAPS  -->
+	  <resultMap id="DetalleCompraPlain" type="DetalleCompra">
+		 		<id column="id" property="id" />		     
+			     <result column="producto_id" property="productoId" />
+			     <result column="cantidad" property="cantidad" />
+			     <result column="preciounitario" property="precioUnitario" />
+	  </resultMap>
+	  
+	  <!--  INSERT  -->
+	  <insert id="insertDetalleCompra" useGeneratedKeys="true" keyProperty="id" parameterType="DetalleCompra">
+	  	insert into DetalleCompra(producto_id, compra_id, cantidad, preciounitario) 
+	  	values (#{producto.id}, #{compra.id}, #{cantidad}, #{precioUnitario});	  	
+	  </insert>
+	  
+	  <!--  UPDATE  -->	  
+	  <update id="updateDetalleCompra" parameterType="DetalleCompra">
+	  	update DetalleCompra set
+	  	 
+	  	producto_id = #{producto.id},
+	  	compra_id = #{compra.id},          
+	  	cantidad = #{cantidad},     	
+       	preciounitario = #{precioUnitario}      	 
+       	    	
+        where id = #{id};
+	  </update>	  	 
+	  
+	  <!--  DELETE  -->	  
+	  <delete id="deleteDetalleCompraById" parameterType="Long">
+	    delete from DetalleCompra WHERE id = #{id};
+	  </delete>
+	  
+	  <!--  SELECT  -->
+	  <select id="findAllDetalleCompras" resultType="DetalleCompra">
+	  	select * from DetalleCompra;
+	  </select>
+	  
+	  <select id="findDetalleCompraById" parameterType="Long" resultType="DetalleCompra">
+	  	select * from DetalleCompra WHERE ID = #{id};
+	  </select>
+	  
+		
+	  <select id="findDetalleCompraFromCompra"
+          parameterType="Long" resultMap="DetalleCompraPlain">
+          select id, cantidad, preciounitario, producto_id from DetalleCompra WHERE compra_id = #{id};
+      </select>	  	
+	
+  </mapper>
