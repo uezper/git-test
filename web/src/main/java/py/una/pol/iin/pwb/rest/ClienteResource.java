@@ -68,10 +68,13 @@ public class ClienteResource {
 		clienteBean.removeCliente(id);
 	}
 
+	@GET
 	@Path("/testing")
+	@CatchExceptions
 	public Cliente testing() {
 		Cliente c = new Cliente();
 		c.setNombre("Esto es una prueba");
 		return c;
 	}
 }
+
